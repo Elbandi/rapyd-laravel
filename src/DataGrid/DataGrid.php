@@ -196,7 +196,13 @@ class DataGrid extends DataSet
         }
         if (count($column->actions)>0) {
             $key = ($column->key != '') ?  $column->key : $this->key;
-            $keyvalue = @$tablerow->{$key};
+            if (is_object($tablerow)) {
+                $keyvalue = @$tablerow->{$key};
+            } elseif (is_array($tablerow)) {
+                $keyvalue = @$tablerow[$key];
+            } else {
+                $keyvalue = $key;
+            }
 
             $value = \View::make($column->view, array('uri' => $column->uri, 'id' => $keyvalue, 'actions' => $column->actions));
 
