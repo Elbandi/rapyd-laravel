@@ -15,6 +15,7 @@ class Column
     public $key = 'id';
     public $uri = null;
     public $actions = array();
+    public $view = null;
 
     public $value = null;
     public $cell_callable;
@@ -70,10 +71,11 @@ class Column
         return $this;
     }
 
-    public function actions($uri, $actions)
+    public function actions($uri, $actions, $view = null)
     {
         $this->uri = $uri;
         $this->actions = $actions;
+        $this->view = !is_null($view) ? $view : 'rapyd::datagrid.actions';
 
         return $this;
     }

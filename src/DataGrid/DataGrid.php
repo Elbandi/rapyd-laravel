@@ -198,7 +198,7 @@ class DataGrid extends DataSet
             $key = ($column->key != '') ?  $column->key : $this->key;
             $keyvalue = @$tablerow->{$key};
 
-            $value = \View::make('rapyd::datagrid.actions', array('uri' => $column->uri, 'id' => $keyvalue, 'actions' => $column->actions));
+            $value = \View::make($column->view, array('uri' => $column->uri, 'id' => $keyvalue, 'actions' => $column->actions));
 
         }
 
@@ -229,9 +229,9 @@ class DataGrid extends DataSet
         return $this->output;
     }
 
-    public function edit($uri, $label='Edit', $actions='show|modify|delete', $key = '')
+    public function edit($uri, $label='Edit', $actions='show|modify|delete', $key = '', $view = null)
     {
-        return $this->add('_edit', $label)->actions($uri, explode('|', $actions))->key($key);
+        return $this->add('_edit', $label)->actions($uri, explode('|', $actions), $view)->key($key);
     }
 
     public function getColumn($column_name)
